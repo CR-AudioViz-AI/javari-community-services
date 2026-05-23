@@ -1,54 +1,32 @@
-'use client';
-import { motion } from 'framer-motion';
-import { Heart, ArrowRight, Check, Zap, Shield, Users, Globe } from 'lucide-react';
-
-export default function Page() {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-emerald-600" />
-            <span className="text-xl font-bold">Javari Community</span>
-          </div>
-          <a href="/signup" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">Get Started</a>
-        </div>
-      </nav>
-      
-      <section className="pt-32 pb-20 px-4 text-center">
-        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
-          <span className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm mb-6">
-            <Zap className="w-4 h-4" /> AI-Powered Platform
-          </span>
-          <h1 className="text-5xl font-bold text-slate-900 mb-6">Javari Community</h1>
-          <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
-            Powered by Javari AI. Part of the CR AudioViz AI ecosystem.
-          </p>
-          <a href="https://javariai.com" className="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold">
-            Get Started <ArrowRight className="w-5 h-5" />
-          </a>
-        </motion.div>
-      </section>
-      
-      <section className="py-20 px-4 bg-slate-50">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-          {[
-            { icon: Shield, title: 'Secure', desc: 'Enterprise-grade security' },
-            { icon: Users, title: 'Collaborative', desc: 'Work together seamlessly' },
-            { icon: Globe, title: 'Accessible', desc: 'Available everywhere' },
-          ].map((f, i) => (
-            <motion.div key={f.title} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} transition={{delay:i*0.1}} className="bg-white p-6 rounded-xl border">
-              <f.icon className="w-10 h-10 text-emerald-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
-              <p className="text-slate-600">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-      
-      <footer className="py-12 px-4 bg-slate-900 text-center">
-        <p className="text-slate-400">© 2025 CR AudioViz AI, LLC. All rights reserved.</p>
-      </footer>
-    </div>
-  );
+"use client";
+// app/page.tsx — Javari Community Services · CR AudioViz AI · EIN 39-3646201 · May 2026
+import { useState } from "react";
+const T=[{"i": "\ud83d\udc9a", "l": "Grant Writer", "d": "Community grants", "h": "https://craudiovizai.com/grants"}, {"i": "\ud83d\udcf1", "l": "Social", "d": "Community posts", "h": "/social"}, {"i": "\ud83d\udccb", "l": "Event Plan", "d": "Event documents", "h": "/events"}, {"i": "\ud83d\udce7", "l": "Newsletter", "d": "Community newsletters", "h": "/nl"}];
+export default function P() {
+  const [i,setI]=useState(""); const [o,setO]=useState(""); const [l,setL]=useState(false);
+  async function go() { if(!i.trim())return; setL(true);setO("");
+    try { const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:i}],stream:false,systemOverride:"You are a community organizer and nonprofit communications expert."})});
+      const d=await r.json(); setO(d?.choices?.[0]?.message?.content||d?.content||"Error.");
+    } catch {setO("Error.");} setL(false); }
+  return (<div style={{minHeight:"100vh",background:"#040912",color:"#e2e8f0",fontFamily:"system-ui"}}>
+    <nav style={{background:"#1E3A5F",padding:"0 20px",height:52,display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:100}}>
+      <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:20}}>🤝</span><span style={{fontWeight:800,color:"#1E3A5F",fontSize:15}}>Javari Community Services</span></div>
+      <a href="https://craudiovizai.com/auth/signup" style={{background:"#FF0800",color:"#fff",borderRadius:7,padding:"5px 14px",fontSize:12,fontWeight:700,textDecoration:"none"}}>Sign Up Free</a>
+    </nav>
+    <section style={{background:"linear-gradient(135deg,#1E3A5F,#040912)",padding:"48px 24px 40px",textAlign:"center"}}>
+      <h1 style={{fontSize:"clamp(22px,4vw,42px)",fontWeight:900,color:"#fff",margin:"0 0 10px",lineHeight:1.05}}>AI Tools for<br/><span style={{color:"#1E3A5F"}}>Community Orgs</span></h1>
+      <p style={{color:"rgba(255,255,255,0.7)",fontSize:15,margin:0}}>Grants, volunteer coordination, and community engagement.</p>
+    </section>
+    <section style={{maxWidth:700,margin:"0 auto",padding:"24px 20px 0"}}>
+      <div style={{background:"#0F1F32",border:"1px solid rgba(0,180,216,0.12)",borderRadius:14,padding:"18px 22px"}}>
+        <div style={{display:"flex",gap:8}}><input value={i} onChange={e=>setI(e.target.value)} onKeyDown={e=>e.key==="Enter"&&go()} placeholder="Write community event announcement for annual neighborhood cleanup" style={{flex:1,background:"#172D48",border:"1px solid rgba(0,180,216,0.15)",borderRadius:8,padding:"10px 12px",color:"#e2e8f0",fontSize:13,outline:"none",fontFamily:"system-ui"}}/>
+        <button onClick={go} disabled={l||!i.trim()} style={{background:l||!i.trim()?"#0F1F32":"#1E3A5F",color:l||!i.trim()?"#374151":"#1E3A5F",border:"1px solid rgba(0,180,216,0.2)",borderRadius:8,padding:"10px 18px",fontSize:13,fontWeight:700,cursor:l||!i.trim()?"not-allowed":"pointer",fontFamily:"system-ui"}}>{l?"...":"Go"}</button></div>
+        {o&&<pre style={{marginTop:12,padding:"12px",background:"rgba(0,180,216,0.05)",border:"1px solid rgba(0,180,216,0.1)",borderRadius:8,fontSize:13,color:"#e2e8f0",lineHeight:1.65,whiteSpace:"pre-wrap",fontFamily:"system-ui",maxHeight:300,overflowY:"auto",margin:"12px 0 0"}}>{o}</pre>}
+      </div>
+    </section>
+    <section style={{maxWidth:960,margin:"0 auto",padding:"28px 20px 64px"}}><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))",gap:10}}>
+      {T.map((t:any)=>(<a key={t.h} href={t.h} style={{background:"#0F1F32",border:"1px solid rgba(0,180,216,0.08)",borderRadius:12,padding:"16px",textDecoration:"none",display:"block"}}><span style={{fontSize:24,display:"block",marginBottom:7}}>{t.i}</span><div style={{fontWeight:700,fontSize:13,color:"#e2e8f0",marginBottom:3}}>{t.l}</div><div style={{fontSize:11,color:"#6B7280",lineHeight:1.4}}>{t.d}</div></a>))}
+    </div></section>
+    <footer style={{borderTop:"1px solid rgba(0,180,216,0.08)",padding:"12px 24px",textAlign:"center"}}><p style={{color:"#374151",fontSize:11,margin:0}}>© 2026 CR AudioViz AI, LLC — EIN: 39-3646201</p></footer>
+  </div>);
 }
