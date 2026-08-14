@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'Community Services | CR AudioViz AI',
   description: 'AI tools for community organizations and nonprofits.',
-  openGraph: { title: 'Community Services | CR AudioViz AI', description: 'AI tools for community organizations and nonprofits.', type: 'website' },,
+  openGraph: { title: 'Community Services | CR AudioViz AI', description: 'AI tools for community organizations and nonprofits.', type: 'website' },
 }
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
